@@ -158,6 +158,82 @@ void LCDWIKI_GUI::Draw_Line(int16_t x1, int16_t y1, int16_t x2, int16_t y2)
   	}
 }
 
+void LCDWIKI_GUI::Draw_LineW(int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint8_t wide, uint16_t length)
+{
+  int16_t steep = abs(y2 - y1) > abs(x2 - x1);
+  if (steep)
+  {
+    swap(x1, y1);
+    swap(x2, y2);
+  }
+  if (x1 > x2)
+  {
+    swap(x1, x2);
+    swap(y1, y2);
+  }
+
+  int16_t dx, dy;
+  dx = x2 - x1;
+  dy = abs(y2 - y1);
+
+  int16_t err = dx / 2;
+  int16_t ystep;
+
+  if (y1 < y2)
+  {
+    ystep = 1;
+  }
+  else
+  {
+    ystep = -1;
+  }
+  uint16_t len = length;
+  bool pen = 1;
+  for (; x1<=x2; x1++)
+  {
+    int w;
+    if(len == 0)
+    {
+      pen ^= 1;
+      len = length;
+    }
+    len--;
+
+    if(pen)
+    {
+
+      if (steep)
+      {
+        Draw_Pixel(y1, x1);
+        w = wide;
+        while (w)
+        {
+          w--;
+          Draw_Pixel(y1+(w-wide/2), x1);
+        }
+      }
+      else
+      {
+        Draw_Pixel(x1, y1);
+        w = wide;
+        while (w)
+        {
+          w--;
+          Draw_Pixel(x1, y1+(w-wide/2));
+        }
+
+      }
+    }
+    err -= dy;
+    if (err < 0)
+    {
+      y1 += ystep;
+      err += dx;
+    }
+  }
+}
+
+
 //draw a rectangle
 void LCDWIKI_GUI::Draw_Rectangle(int16_t x1, int16_t y1, int16_t x2, int16_t y2)
 { 

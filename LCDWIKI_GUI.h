@@ -51,6 +51,7 @@ class LCDWIKI_GUI
 	void Fill_Screen(uint16_t color);
 	void Fill_Screen(uint8_t r, uint8_t g, uint8_t b);
 	void Draw_Line(int16_t x1, int16_t y1, int16_t x2, int16_t y2);
+	void Draw_LineW(int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint8_t wide, uint16_t length);
 	void Draw_Rectangle(int16_t x1, int16_t y1, int16_t x2, int16_t y2);
 	void Fill_Rectangle(int16_t x1, int16_t y1, int16_t x2, int16_t y2);
 	void Draw_Round_Rectangle(int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint8_t radius);
